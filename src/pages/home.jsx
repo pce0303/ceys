@@ -1,16 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import '../styles/global.css';
 import ToggleMode from '../components/Mode';
 import { useRecoilState } from 'recoil';
 import darkModeState from '../recoil/atoms/darkModeState';
 
+const lightTheme = {
+  colors: {
+    background: 'white',
+    text: 'black',
+    button: 'black',
+    buttonText: 'white',
+    buttonHover: 'white',
+    border: 'black',
+  },
+};
+
+const darkTheme = {
+  colors: {
+    background: '#333',
+    text: 'white',
+    button: 'white',
+    buttonText: '#333',
+    buttonHover: '#333',
+    border: 'white',
+  },
+};
+
 export default function Home() {
-  const [ darkMode, setDarkMode ] = useRecoilState(darkModeState);
+  const [darkMode, setDarkMode] = useRecoilState(darkModeState);
 
   return (
-    <>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <ToggleMode />
       <Wrapper>
         <Container>
@@ -25,10 +47,9 @@ export default function Home() {
           <LinkStyle to={'/ys'}><Button>more info</Button></LinkStyle>
         </Container>
       </Wrapper>
-    </>
+    </ThemeProvider>
   );
 }
-
 
 const Wrapper = styled.div`
   width: 100%; height: 100vh;
@@ -36,6 +57,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  background-color: ${({ theme }) => theme.colors.background};
 
   @media all and (max-width: 700px) {
     flex-direction: column;
@@ -52,7 +74,7 @@ const Container = styled.div`
 `;
 
 const Name = styled.h1`
-  color: white;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 80px;
   margin-bottom: 2rem;
 
@@ -62,12 +84,12 @@ const Name = styled.h1`
 `;
 
 const Button = styled.div`
-  width: 200px; height: 100px;
-  padding: 30px;
+  width: 200px; height: 80px;
+  padding: 20px;
   margin-top: 2rem;
   
-  background-color: white;
-  color: black;
+  background-color: ${({ theme }) => theme.colors.button};
+  color: ${({ theme }) => theme.colors.buttonText};
   font-size: 30px;
   font-weight: bold;
   text-align: center;
@@ -77,9 +99,9 @@ const Button = styled.div`
   transition: all 0.5s ease;
 
   &:hover{
-    background-color: black;
-    color: white;
-    border: 2px solid white;
+    background-color: ${({ theme }) => theme.colors.buttonHover};
+    color: ${({ theme }) => theme.colors.text};
+    border: 2px solid ${({ theme }) => theme.colors.border};
   }
 
   @media screen and (max-width: 479px) {
@@ -95,7 +117,11 @@ const LinkStyle = styled(Link)`
 `;
 
 const Intro = styled.p`
-  color: white;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 20px;
   margin: 0;
+
+  @media screen and (max-width: 479px){
+    font-size: 14px;
+  }
 `;

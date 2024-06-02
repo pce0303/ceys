@@ -4,7 +4,7 @@ import Home from './pages/home';
 import Choeun from './pages/choeun';
 import Yeseul from './pages/yeseul';
 import NotFound from './pages/NotFound';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { createGlobalStyle, keyframes } from 'styled-components';
 import darkModeState from './recoil/atoms/darkModeState';
 
@@ -12,7 +12,6 @@ const App = () => {
   const darkMode = useRecoilValue(darkModeState);
 
   return (
-    <RecoilRoot>
       <BrowserRouter>
       <GlobalStyle darkMode={darkMode} />
         <Routes>
@@ -21,9 +20,7 @@ const App = () => {
           <Route path='ys' element={<Yeseul />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </RecoilRoot>
-    
+      </BrowserRouter>    
   );
 }
 

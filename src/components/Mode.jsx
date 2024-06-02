@@ -4,24 +4,25 @@ import { useRecoilState } from 'recoil';
 import darkModeState from '../recoil/atoms/darkModeState';
 
 export default function ToggleMode() {
-  const [checked, setChecked] = useRecoilState(darkModeState);
+  const [darkMode, setDarkMode] = useRecoilState(darkModeState);
 
   const handleToggle = () => {
-    setChecked(!checked);
+    setDarkMode(!darkMode);
   };
 
   return (
     <Wrapper>
-      <Guide>{checked ? 'Dark Mode' : 'Light Mode'}</Guide>
+      <Guide darkMode={darkMode}>
+        {darkMode ? 'Dark Mode' : 'Light Mode'}
+      </Guide>
       <ToggleWrapper>
         <ToggleSwitch>
-          <ToggleCheckbox checked={checked} onClick={handleToggle} />
-          <ToggleSlider checked={checked} />
+          <ToggleCheckbox checked={darkMode} onClick={handleToggle} />
+          <ToggleSlider checked={darkMode} />
         </ToggleSwitch>
-        <Image src={checked ? '/assets/moon.png' : '/assets/sun.png'} />
+        <Image src={darkMode ? '/assets/moon.png' : '/assets/sun.png'} />
       </ToggleWrapper>
     </Wrapper>
-    
   );
 }
 
@@ -34,10 +35,14 @@ const Wrapper = styled.div`
 const ToggleWrapper = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media screen and (max-width:479px) {
+    flex-direction: column;
+  }
 `;
 
 const Guide = styled.p`
-  color: white;
+  color: ${props => props.darkMode ? '#fff' : '#333'};
   margin-left: 15px;
 `;
 
@@ -62,7 +67,7 @@ const ToggleSlider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${props => props.checked ? '#333' : '#ccc'};
+  background-color: ${props => props.checked ? '#fafafa' : '#ccc'};
   -webkit-transition: 0.4s;
   transition: all ease 0.4s;
   border-radius: 34px;
@@ -74,14 +79,13 @@ const ToggleSlider = styled.span`
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: #fff;
+    background-color: ${props => props.checked ? '#333' : '#fafafa'};;
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
   }
 
   ${ToggleCheckbox}:checked + & {
-    
     &:before {
       -webkit-transform: translateX(26px);
       -ms-transform: translateX(26px);
@@ -92,5 +96,10 @@ const ToggleSlider = styled.span`
 
 const Image = styled.img`
   width: 30px; height: 30px;
-  margin-left: 10px;
+  margin: 0 10px;
+
+  @media screen and (max-width: 479px) {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
 `;
