@@ -19,8 +19,8 @@ export default function NotFound() {
         {/* <Image src='/assets/404.png' /> */}
         <Title darkMode={darkMode}>Page Not Found</Title>
         <ButtonContainer>
-          <Back darkMode={darkMode} onClick={handleBack}>돌아가기</Back>
-          <LinkStyle to={'/'}><Back darkMode={darkMode}>홈으로</Back></LinkStyle>
+          <Back darkMode={darkMode} onClick={handleBack}>Back</Back>
+          <LinkStyle to={'/'}><Back darkMode={darkMode}>Home</Back></LinkStyle>
         </ButtonContainer>
       </Wrapper>
     </>

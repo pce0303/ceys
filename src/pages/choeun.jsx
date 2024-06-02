@@ -1,15 +1,27 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import darkModeState from '../recoil/atoms/darkModeState';
+import ToggleMode from '../components/Mode';
 
 export default function Choeun() {
+
+  const [ darkMode, setDarkMode ] = useRecoilState(darkModeState);
+  
   return(
-    <>
-      <Test>Choeun</Test>
-    </>
+    <Wrapper>
+      <ToggleMode />
+      <Test darkMode={darkMode}>Choeun</Test>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  width: 100%; height: 100%;
+  display: flex;
+`;
+
 const Test = styled.p`
-  color: white;
+  color: ${props => props.darkMode ? 'white' : 'black'};
   font-size: 100px;
 `;
