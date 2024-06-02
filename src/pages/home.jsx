@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../styles/global.css';
+import ToggleMode from '../components/Mode';
+import { useRecoilState } from 'recoil';
+import darkModeState from '../recoil/atoms/darkModeState';
 
 export default function Home() {
+  const [ darkMode, setDarkMode ] = useRecoilState(darkModeState);
+
   return (
     <>
+      <ToggleMode />
       <Wrapper>
         <Container>
           <Name>Park Choeun</Name>
